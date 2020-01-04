@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+{% csrf_token %}
+<h3>哈哈哈哈哈哈</h3>
+<div><input type="text" id="msg"></div>
+<div><button id="btn1">提交</button></div>
+<div id="show"></div>
+</body>
+</html>
+<script>
+    $(function () {
+        $("#btn1").click(function () {
+            $.ajax({
+                type:"POST",
+                dataType:"json",
+                headers:{"X-CSRFToken":$("input[name=csrfmiddlewaretoken]").val()},
+                url:"http://127.0.0.1:8000/test_cors_server",
+                data:{"msg":$("#msg").val()},
+                success:function (res) {
+                    console.log(res);
+                    $("#show").html("<p style='color:red'>"+res.msg+"</p>")
+                }
+            })
+        })
+    })
+</script>
